@@ -20,6 +20,7 @@ public class RunRecord {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @Column(name = "user_id")
     private Integer userId;
 
     private Integer duration;

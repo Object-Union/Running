@@ -1,13 +1,7 @@
 package com.example.running.Service;
 
-import com.example.running.Bean.RoomInfo;
-import com.example.running.Bean.RunRecord;
-import com.example.running.Bean.RunRoom;
-import com.example.running.Bean.User;
-import com.example.running.Repository.RoomInfoRepository;
-import com.example.running.Repository.RunRecordRepository;
-import com.example.running.Repository.RunRoomRepository;
-import com.example.running.Repository.UserRepository;
+import com.example.running.Bean.*;
+import com.example.running.Repository.*;
 import com.example.running.Util.RandomRoomKeyUtils;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +10,7 @@ import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service(value = "RunService")
 public class RunService {
@@ -30,6 +25,9 @@ public class RunService {
 
     @Resource(name = "UserRepository")
     UserRepository userRepository;
+
+    @Resource(name = "DriftRunRepository")
+    DriftRunRepository driftRunRepository;
 
     public RunRecord saveRecord(RunRecord runRecord) {
         runRecord.setDate(LocalDateTime.now());
@@ -93,5 +91,20 @@ public class RunService {
     public List<User> getRoomUsers(Integer roomId) {
         List<Integer> userIds = runRoomRepository.findUserIdsByRoomId(roomId);
         return userRepository.findAllById(userIds);
+    }
+
+    public List<User> ranking(Integer roomId) {
+        List<RunRecord> runRecordByRoomId = runRecordRepository.findRunRecordByRoomId(roomId);
+        runRecordByRoomId.sort((o1, o2) -> (int) (o1.getCalorie() - o2.getCalorie()));
+        List<Integer> userIds = runRecordByRoomId.stream().map(RunRecord::getUserId).collect(Collectors.toList());
+        return userRepository.findAllById(userIds);
+    }
+
+    public List<DriftRun> driftRoute() {
+        return driftRunRepository.findAll();
+    }
+
+    public DriftRun SelectDriftRoute(Integer routeId) {
+        return driftRunRepository.findById(routeId).orElse(null);
     }
 }

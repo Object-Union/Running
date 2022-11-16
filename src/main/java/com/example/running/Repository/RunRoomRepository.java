@@ -16,5 +16,8 @@ public interface RunRoomRepository extends JpaRepository<RunRoom, Integer> {
 
     RunRoom findRunRoomsByRoomIdAndUserId(Integer roomId, Integer userId);
 
+    @Modifying
+    @Transactional
+    @Query(nativeQuery = true, value = "delete from run_room where room_id = ?1 and user_id = ?2")
     void deleteRunRoomByRoomIdAndUserId(Integer roomId, Integer userId);
 }

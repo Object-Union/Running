@@ -1,8 +1,8 @@
 package com.example.running.Controller;
 
+import com.example.running.Bean.DriftRun;
 import com.example.running.Bean.RoomInfo;
 import com.example.running.Bean.RunRecord;
-import com.example.running.Bean.RunRoom;
 import com.example.running.Bean.User;
 import com.example.running.Service.RunService;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -40,5 +40,20 @@ public class RunController {
     @RequestMapping("/GetRoomUsers")
     public List<User> GetRoomUsers(Integer roomId) {
         return runService.getRoomUsers(roomId);
+    }
+
+    @RequestMapping("/Ranking")
+    public List<User> Ranking(Integer roomId) {
+        return runService.ranking(roomId);
+    }
+
+    @RequestMapping("/DriftRoute")
+    public List<DriftRun> DriftRoute() {
+        return runService.driftRoute();
+    }
+
+    @RequestMapping("/SelectDriftRoute")
+    public DriftRun SelectDriftRoute(Integer routeId) {
+        return runService.SelectDriftRoute(routeId);
     }
 }

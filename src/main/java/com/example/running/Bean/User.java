@@ -53,7 +53,7 @@ public class User {
     @JsonIgnore
     private List<Integer> medalList;
 
-//    @OneToMany()
-//    @JoinColumn(name = "user_id", referencedColumnName = "id", insertable = false, updatable = false)
-//    private List<RunRecord> runRecords;
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", insertable = false, updatable = false)
+    private List<RunRecord> runRecords;
 }

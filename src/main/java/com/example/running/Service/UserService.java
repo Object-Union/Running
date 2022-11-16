@@ -1,5 +1,6 @@
 package com.example.running.Service;
 
+import com.example.running.Bean.RunRecord;
 import com.example.running.Bean.User;
 import com.example.running.Common.Upload;
 import com.example.running.Repository.UserRepository;
@@ -10,6 +11,7 @@ import javax.annotation.Resource;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 @Service(value = "UserService")
 public class UserService {
@@ -38,5 +40,14 @@ public class UserService {
 
     public User getUser(Integer id) {
         return userRepository.findById(id).orElse(null);
+    }
+
+    public List<RunRecord> record(Integer userId) {
+        Optional<User> optionalUser = userRepository.findById(userId);
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
+            return user.getRunRecords();
+        }
+        return null;
     }
 }

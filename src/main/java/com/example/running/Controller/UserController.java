@@ -1,5 +1,6 @@
 package com.example.running.Controller;
 
+import com.example.running.Bean.RunRecord;
 import com.example.running.Bean.User;
 import com.example.running.Service.UserService;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -39,7 +40,12 @@ public class UserController {
     }
 
     @RequestMapping("/GetUser")
-    public User GetUser(Integer id) {
-        return userService.getUser(id);
+    public User GetUser(Integer userId) {
+        return userService.getUser(userId);
+    }
+
+    @RequestMapping("/Record")
+    public List<RunRecord> Record(Integer userId) {
+        return userService.record(userId);
     }
 }

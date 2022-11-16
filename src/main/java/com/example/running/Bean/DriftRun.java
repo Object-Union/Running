@@ -18,6 +18,10 @@ public class DriftRun {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    private String name;
+
+    private String route;
+
     private String scenery;
 
     private String bgm;
