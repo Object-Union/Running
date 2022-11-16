@@ -1,0 +1,44 @@
+package com.example.running.Controller;
+
+import com.example.running.Bean.RoomInfo;
+import com.example.running.Bean.RunRecord;
+import com.example.running.Bean.RunRoom;
+import com.example.running.Bean.User;
+import com.example.running.Service.RunService;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import javax.annotation.Resource;
+import java.util.List;
+
+@RestController
+@RequestMapping("/Run")
+public class RunController {
+    @Resource(name = "RunService")
+    RunService runService;
+
+    @RequestMapping("/SaveRecord")
+    public RunRecord SaveRecord(RunRecord runRecord) {
+        return runService.saveRecord(runRecord);
+    }
+
+    @RequestMapping("/StartRoomRun")
+    public RoomInfo StartRoomRun(Integer userId) {
+        return runService.startRoomRun(userId);
+    }
+
+    @RequestMapping("/JoinRoom")
+    public Boolean JoinRoom(String roomKey, Integer userId) {
+        return runService.joinRoom(roomKey, userId);
+    }
+
+    @RequestMapping("/LeftRoom")
+    public Boolean LeftRoom(Integer roomId, Integer userId) {
+        return runService.leftRoom(roomId, userId);
+    }
+
+    @RequestMapping("/GetRoomUsers")
+    public List<User> GetRoomUsers(Integer roomId) {
+        return runService.getRoomUsers(roomId);
+    }
+}
