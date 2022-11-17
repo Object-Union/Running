@@ -2,6 +2,7 @@ package com.example.running.Bean;
 
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.springframework.stereotype.Component;
 
@@ -40,8 +41,9 @@ public class Moment {
     @Column(name = "picture_url")
     private List<String> pictures;
 
-    @OneToMany
-    @JoinColumn(name = "moment_id", referencedColumnName = "id", insertable = false, updatable = false)
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "moment_id", referencedColumnName = "id")
+    @JsonIgnore
     private List<Comment> comments;
 
     @ManyToOne(optional = false)

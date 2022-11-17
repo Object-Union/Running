@@ -39,4 +39,11 @@ public class RunRecord {
     private String runType;
 
     private Integer roomId;
+
+    @Column(name = "drift_route_id")
+    private Integer driftRouteId;
+
+    @OneToOne()
+    @JoinColumn(name = "drift_route_id", insertable = false, updatable = false)
+    private DriftRun driftRun;
 }

@@ -10,6 +10,7 @@ import com.example.running.Repository.UserRepository;
 import com.vdurmont.emoji.EmojiParser;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
@@ -31,6 +32,7 @@ public class MomentService {
     @Resource(name = "CommentRepository")
     CommentRepository commentRepository;
 
+    @Transactional
     public Moment publish(Moment moment, List<MultipartFile> pictures) throws IOException {
         Moment save = momentRepository.save(moment);
         if (pictures != null) {
@@ -46,6 +48,7 @@ public class MomentService {
         return save;
     }
 
+    @Transactional
     public Integer like(Integer userId, Integer momentId) {
         Optional<Moment> optionalMoment = momentRepository.findById(momentId);
         if (optionalMoment.isPresent()) {

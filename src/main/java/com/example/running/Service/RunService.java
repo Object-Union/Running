@@ -4,6 +4,7 @@ import com.example.running.Bean.*;
 import com.example.running.Repository.*;
 import com.example.running.Util.RandomRoomKeyUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.time.LocalDateTime;
@@ -29,6 +30,7 @@ public class RunService {
     @Resource(name = "DriftRunRepository")
     DriftRunRepository driftRunRepository;
 
+    @Transactional
     public RunRecord saveRecord(RunRecord runRecord) {
         runRecord.setDate(LocalDateTime.now());
         if (runRecord.getRoomId() != null) {
@@ -42,6 +44,7 @@ public class RunService {
         return runRecordRepository.save(runRecord);
     }
 
+    @Transactional
     public RoomInfo startRoomRun(Integer userId) {
         HashSet<String> roomKeys = roomInfoRepository.findRoomKey();
         String RoomKey = RandomRoomKeyUtils.GetRandomKey();
@@ -55,6 +58,7 @@ public class RunService {
         return room;
     }
 
+    @Transactional
     public Boolean joinRoom(String roomKey, Integer userId) {
         RoomInfo roomInfo = roomInfoRepository.findRoomInfoByRoomKey(roomKey);
         // 若房间存在
@@ -71,6 +75,7 @@ public class RunService {
         return false;
     }
 
+    @Transactional
     public Boolean leftRoom(Integer roomId, Integer userId) {
         Optional<RoomInfo> optionalRoomInfo = roomInfoRepository.findById(roomId);
         if (optionalRoomInfo.isPresent()) {

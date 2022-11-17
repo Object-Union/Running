@@ -37,7 +37,7 @@ public class NettyWebSocketServer {
 
             // 绑定端口，开始接收进来的连接
             ChannelFuture future = bootstrap.bind(address).sync();
-            log.info("netty服务器开始监听端口: " + address.getPort());
+            log.info("nettyWebSocket服务器开始监听端口: " + address.getPort());
             //关闭channel和块，直到它被关闭
             future.channel().closeFuture().sync();
         } catch (InterruptedException e) {
