@@ -10,6 +10,7 @@ import javax.annotation.Resource;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -109,7 +110,7 @@ public class RunService {
         return driftRunRepository.findAll();
     }
 
-    public DriftRun SelectDriftRoute(Integer routeId) {
-        return driftRunRepository.findById(routeId).orElse(null);
+    public List<Scenery> SelectDriftRoute(Integer routeId) {
+        return Objects.requireNonNull(driftRunRepository.findById(routeId).orElse(null)).getSceneries();
     }
 }

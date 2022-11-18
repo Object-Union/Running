@@ -1,14 +1,15 @@
 package com.example.running.Bean;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Getter
 @Setter
-@ToString
 @Component
 @AllArgsConstructor
 @NoArgsConstructor
@@ -20,9 +21,14 @@ public class DriftRun {
 
     private String name;
 
+    private String picture;
+
     private String route;
 
-    private String scenery;
-
     private String bgm;
+
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "drift_run_id")
+    @JsonIgnore
+    private List<Scenery> sceneries;
 }
