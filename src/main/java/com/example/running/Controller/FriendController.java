@@ -19,6 +19,11 @@ public class FriendController {
         return friendService.subscribeList(userId);
     }
 
+    @RequestMapping("/FansList")
+    public List<User> FansList(Integer userId) {
+        return friendService.fansList(userId);
+    }
+
     @RequestMapping("/Subscribe")
     public Integer Subscribe(Integer userId, Integer friendId) {
         return friendService.subscribe(userId, friendId);

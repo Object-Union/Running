@@ -42,4 +42,7 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     Integer deleteASubscribeRecord(Integer userId1, Integer userId2);
 
     List<User> findUsersByNicknameContains(String nickname);
+
+    @Query(nativeQuery = true, value = "select user_id from friend where friend_id = ?1")
+    List<Integer> findFansIdByUserId(Integer userId);
 }

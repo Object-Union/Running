@@ -34,6 +34,9 @@ public class Moment {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private LocalDateTime date;
 
+    @Column(name = "record_id")
+    private Integer record_id;
+
     @ElementCollection
     @CollectionTable(name = "moment_pictures",
             joinColumns = @JoinColumn(name = "moment_id", referencedColumnName = "id")
@@ -50,10 +53,15 @@ public class Moment {
     @JoinColumn(name = "user_id", insertable = false, updatable = false)
     private User user;
 
-    public Moment(String title, String content, Integer userId, Integer likeNum, LocalDateTime date) {
+    @OneToOne
+    @JoinColumn(name = "record_id", insertable = false, updatable = false)
+    RunRecord runRecord;
+
+    public Moment(String title, String content, Integer userId, Integer record_id, Integer likeNum, LocalDateTime date) {
         this.title = title;
         this.content = content;
         this.userId = userId;
+        this.record_id = record_id;
         this.likeNum = likeNum;
         this.date = date;
     }

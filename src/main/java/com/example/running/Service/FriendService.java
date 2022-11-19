@@ -30,4 +30,9 @@ public class FriendService {
         }
         return null;
     }
+
+    public List<User> fansList(Integer userId) {
+        List<Integer> fansId = userRepository.findFansIdByUserId(userId);
+        return userRepository.findAllById(fansId);
+    }
 }
