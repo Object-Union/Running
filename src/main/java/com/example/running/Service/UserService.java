@@ -28,9 +28,9 @@ public class UserService {
 
     public void updateAvatar(MultipartFile avatar, Integer userId) throws IOException {
         if (avatar != null) {
-            String url = Upload.AVATAR_DIR + userId + ".png";
-            avatar.transferTo(new File(url));
-            userRepository.updateAvatar(url, userId);
+            String uri = userId + ".png";
+            avatar.transferTo(new File(Upload.AVATAR_DIR + uri));
+            userRepository.updateAvatar(Upload.BASE_URL + uri, userId);
         }
     }
 

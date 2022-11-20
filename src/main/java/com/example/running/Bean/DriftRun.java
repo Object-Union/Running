@@ -27,6 +27,8 @@ public class DriftRun {
 
     private String bgm;
 
+    private Boolean onActivity;
+
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "drift_run_id")
     @JsonIgnore
