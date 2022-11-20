@@ -37,13 +37,13 @@ public class User {
     @JsonIgnore
     private List<Integer> likedArticle;
 
-    @ElementCollection(fetch = FetchType.LAZY)
-    @CollectionTable(name = "friend",
-            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id")
-    )
-    @Column(name = "friend_id")
-    @JsonIgnore
-    private List<Integer> friendList;
+//    @ElementCollection(fetch = FetchType.LAZY)
+//    @CollectionTable(name = "friend",
+//            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id")
+//    )
+//    @Column(name = "friend_id")
+//    @JsonIgnore
+//    private List<Integer> friendList;
 
     @ElementCollection(fetch = FetchType.LAZY)
     @CollectionTable(name = "user_medal",

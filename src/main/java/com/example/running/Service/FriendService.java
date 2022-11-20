@@ -22,13 +22,8 @@ public class FriendService {
     }
 
     public List<User> subscribeList(Integer userId) {
-        Optional<User> optionalUser = userRepository.findById(userId);
-        if (optionalUser.isPresent()) {
-            User user = optionalUser.get();
-            List<Integer> friendList = user.getFriendList();
-            return userRepository.findAllById(friendList);
-        }
-        return null;
+        List<Integer> fansId = userRepository.findSubscribeIdByUserId(userId);
+        return userRepository.findAllById(fansId);
     }
 
     public List<User> fansList(Integer userId) {

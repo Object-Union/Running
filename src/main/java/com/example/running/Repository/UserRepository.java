@@ -43,6 +43,9 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
     List<User> findUsersByNicknameContains(String nickname);
 
+    @Query(nativeQuery = true, value = "select friend_id from friend where user_id = ?1")
+    List<Integer> findSubscribeIdByUserId(Integer userId);
+
     @Query(nativeQuery = true, value = "select user_id from friend where friend_id = ?1")
     List<Integer> findFansIdByUserId(Integer userId);
 }

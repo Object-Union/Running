@@ -53,4 +53,9 @@ public class RunController {
     public List<Scenery> SelectDriftRoute(Integer routeId) {
         return runService.SelectDriftRoute(routeId);
     }
+
+    @RequestMapping("/DriftMeet")
+    public List<User> DriftMeet(Integer routeId, Integer userId) {
+        return runService.driftMeet(routeId, userId);
+    }
 }

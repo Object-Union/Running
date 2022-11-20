@@ -18,7 +18,7 @@ public class JsonUtils {
     public static void main(String[] args) throws JsonProcessingException {
         Chat chat = new Chat(null, null, 1, 2, "Hello World");
         String s = JsonUtils.ReadToJSON(chat);
-        // {"id":null,"date":null,"senderId":1,"recipientId":2,"content":"确实"}
+        // {"senderId":1,"recipientId":2,"content":"确实"}
         System.out.println(s);
         System.out.println(ReadToObject(s, Chat.class));
     }

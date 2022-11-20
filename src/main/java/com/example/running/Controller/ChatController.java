@@ -19,8 +19,18 @@ public class ChatController {
         return chatService.getHistory(senderId, recipientId, pageNo);
     }
 
+    @RequestMapping("/GetListHistory")
+    public List<List<Chat>> GetListHistory(Integer userId, List<Integer> others) {
+        return chatService.getListHistory(userId, others);
+    }
+
+    @RequestMapping("/GetUnCheckChat")
+    public List<List<Chat>> GetUnCheckChat(Integer userId) {
+        return chatService.getUnCheckChat(userId);
+    }
+
     @RequestMapping("/SendMessage")
-    public Chat SendMessage(Integer senderId, Integer recipientId, String content) {
-        return chatService.sendMessage(senderId, recipientId, content);
+    public Chat SendMessage(Chat chat) {
+        return chatService.sendMessage(chat);
     }
 }

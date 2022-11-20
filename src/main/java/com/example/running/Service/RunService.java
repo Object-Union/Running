@@ -8,10 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service(value = "RunService")
@@ -112,5 +109,26 @@ public class RunService {
 
     public List<Scenery> SelectDriftRoute(Integer routeId) {
         return Objects.requireNonNull(driftRunRepository.findById(routeId).orElse(null)).getSceneries();
+    }
+
+    public List<User> driftMeet(Integer routeId, Integer userId) {
+        List<Integer> userIds = runRecordRepository.findUserIdByRouteId(routeId);
+        List<Integer> want = new ArrayList<>();
+        Random random = new Random();
+        if (userIds.size() > 5) {
+            while (want.size() != 5) {
+                int index = random.nextInt(userIds.size());
+                Integer randomId = userIds.get(index);
+                if (Objects.equals(randomId, userId) || want.contains(randomId)) continue;
+                want.add(randomId);
+            }
+        } else {
+            for (Integer id : userIds) {
+                if (!Objects.equals(id, userId)) {
+                    want.add(id);
+                }
+            }
+        }
+        return userRepository.findAllById(want);
     }
 }

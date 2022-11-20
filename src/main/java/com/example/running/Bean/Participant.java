@@ -18,6 +18,9 @@ public class Participant {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @Column(name = "activity_id")
+    private Integer activityId;
+
     @Column(name = "user_id")
     private Integer userId;
 
@@ -27,8 +30,9 @@ public class Participant {
     @JoinColumn(name = "user_id", updatable = false, insertable = false)
     private User user;
 
-    public Participant(Integer id, Integer userId, Boolean finish) {
+    public Participant(Integer id, Integer activityId, Integer userId, Boolean finish) {
         this.id = id;
+        this.activityId = activityId;
         this.userId = userId;
         this.finish = finish;
     }

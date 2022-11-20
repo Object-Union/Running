@@ -24,4 +24,19 @@ public class ActivityController {
     public List<Participant> GetParticipants(Integer activityId) {
         return activityService.getParticipants(activityId);
     }
+
+    @RequestMapping("/Join")
+    public Boolean Join(Integer userId, Integer activityId) {
+        return activityService.join(userId, activityId);
+    }
+
+    @RequestMapping("/UnJoin")
+    public Boolean UnJoin(Integer userId, Integer activityId) {
+        return activityService.unJoin(userId, activityId);
+    }
+
+    @RequestMapping("/Finish")
+    public void Finish(Integer userId, Integer activityId) {
+        activityService.finish(userId, activityId);
+    }
 }

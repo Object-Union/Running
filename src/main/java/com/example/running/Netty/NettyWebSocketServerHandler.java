@@ -66,8 +66,8 @@ public class NettyWebSocketServerHandler extends SimpleChannelInboundHandler<Tex
     @Override
     protected void channelRead0(ChannelHandlerContext channelHandlerContext, TextWebSocketFrame textWebSocketFrame) throws JsonProcessingException {
         Chat chat = JsonUtils.ReadToObject(textWebSocketFrame.text(), Chat.class);
+        Chat save = chatService.sendMessage(chat);
         log.info("[ " + chat.getSenderId() + " ]" + " ---> [ " + chat.getRecipientId() + " ]: " + chat.getContent());
-        Chat save = chatService.sendMessage(chat.getSenderId(), chat.getRecipientId(), chat.getContent());
         if (!USER_CHANNEL.containsKey(chat.getSenderId()) || USER_CHANNEL.get(chat.getSenderId()) != channelHandlerContext.channel().id()) {
             USER_CHANNEL.put(chat.getSenderId(), channelHandlerContext.channel().id());
         }
@@ -78,8 +78,11 @@ public class NettyWebSocketServerHandler extends SimpleChannelInboundHandler<Tex
                 log.info("已发送");
                 channel.writeAndFlush(new TextWebSocketFrame(save.toString()));
             } else {
+                chatService.storeUncheckChat(chat);
                 USER_CHANNEL.remove(chat.getRecipientId());
             }
+        } else {
+            chatService.storeUncheckChat(chat);
         }
     }
 
