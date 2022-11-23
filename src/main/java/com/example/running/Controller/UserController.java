@@ -44,8 +44,8 @@ public class UserController {
         return userService.getUser(userId);
     }
 
-    @RequestMapping("/Record")
-    public List<RunRecord> Record(Integer userId) {
-        return userService.record(userId);
+    @RequestMapping("/GetRunRecord")
+    public List<RunRecord> GetRunRecord(Integer userId) {
+        return userService.getRunRecord(userId);
     }
 }

@@ -42,7 +42,7 @@ public class UserService {
         return userRepository.findById(id).orElse(null);
     }
 
-    public List<RunRecord> record(Integer userId) {
+    public List<RunRecord> getRunRecord(Integer userId) {
         Optional<User> optionalUser = userRepository.findById(userId);
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
