@@ -20,8 +20,8 @@ public class RunController {
     }
 
     @RequestMapping("/StartRoomRun")
-    public RoomInfo StartRoomRun(Integer userId) {
-        return runService.startRoomRun(userId);
+    public RoomInfo StartRoomRun(Integer userId, Integer routeId) {
+        return runService.startRoomRun(userId, routeId);
     }
 
     @RequestMapping("/JoinRoom")

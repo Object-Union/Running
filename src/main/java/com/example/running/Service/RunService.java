@@ -43,14 +43,14 @@ public class RunService {
     }
 
     @Transactional
-    public RoomInfo startRoomRun(Integer userId) {
+    public RoomInfo startRoomRun(Integer userId, Integer routeId) {
         HashSet<String> roomKeys = roomInfoRepository.findRoomKey();
         String RoomKey = RandomRoomKeyUtils.GetRandomKey();
         while (roomKeys.contains(RoomKey)) {
             RoomKey = RandomRoomKeyUtils.GetRandomKey();
         }
         // 创建房间, 初始化
-        RoomInfo room = roomInfoRepository.save(new RoomInfo(null, RoomKey, 1, false));
+        RoomInfo room = roomInfoRepository.save(new RoomInfo(null, RoomKey, 1, false, routeId));
         // 保存参加记录
         runRoomRepository.save(new RunRoom(null, room.getId(), userId));
         return room;
