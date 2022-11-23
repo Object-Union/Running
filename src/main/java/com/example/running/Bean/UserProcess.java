@@ -12,15 +12,15 @@ import javax.persistence.*;
 @Component
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "medal")
-public class Medal {
+@Table(name = "user_task")
+public class UserProcess {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private String intro;
+    private Integer userId;
 
-    private String icon;
+    private Integer taskId;
 
-    private String noIcon;
+    private Integer process;
 }
