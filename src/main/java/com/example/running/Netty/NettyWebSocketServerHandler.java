@@ -64,31 +64,37 @@ public class NettyWebSocketServerHandler extends SimpleChannelInboundHandler<Tex
      * 服务器接收到信息时触发
      */
     @Override
-    protected void channelRead0(ChannelHandlerContext channelHandlerContext, TextWebSocketFrame textWebSocketFrame) throws JsonProcessingException {
-        Chat chat = JsonUtils.ReadToObject(textWebSocketFrame.text(), Chat.class);
-        Chat save = chatService.sendMessage(chat);
-        log.info("[ " + chat.getSenderId() + " ]" + " ---> [ " + chat.getRecipientId() + " ]: " + chat.getContent());
-        if (!USER_CHANNEL.containsKey(chat.getSenderId()) || USER_CHANNEL.get(chat.getSenderId()) != channelHandlerContext.channel().id()) {
-            USER_CHANNEL.put(chat.getSenderId(), channelHandlerContext.channel().id());
+    protected void channelRead0(ChannelHandlerContext channelHandlerContext, TextWebSocketFrame textWebSocketFrame) {
+        Chat chat = null;
+        try {
+            chat = JsonUtils.ReadToObject(textWebSocketFrame.text(), Chat.class);
+        } catch (JsonProcessingException e) {
+            channelHandlerContext.channel().writeAndFlush(new TextWebSocketFrame("发送数据格式错误！"));
         }
-        if (USER_CHANNEL.containsKey(chat.getRecipientId())) {
-            ChannelId recipientChannelId = USER_CHANNEL.get(chat.getRecipientId());
-            Channel channel = CHANNEL_GROUP.find(recipientChannelId);
-            if (channel != null) {
-                log.info("已发送");
-                channel.writeAndFlush(new TextWebSocketFrame(save.toString()));
+        if (chat != null) {
+            Chat save = chatService.sendMessage(chat);
+            log.info("[ " + chat.getSenderId() + " ]" + " ---> [ " + chat.getRecipientId() + " ]: " + chat.getContent());
+            if (!USER_CHANNEL.containsKey(chat.getSenderId()) || USER_CHANNEL.get(chat.getSenderId()) != channelHandlerContext.channel().id()) {
+                USER_CHANNEL.put(chat.getSenderId(), channelHandlerContext.channel().id());
+            }
+            if (USER_CHANNEL.containsKey(chat.getRecipientId())) {
+                ChannelId recipientChannelId = USER_CHANNEL.get(chat.getRecipientId());
+                Channel channel = CHANNEL_GROUP.find(recipientChannelId);
+                if (channel != null) {
+                    log.info("已发送");
+                    channel.writeAndFlush(new TextWebSocketFrame(save.toString()));
+                } else {
+                    chatService.storeUncheckChat(chat);
+                    USER_CHANNEL.remove(chat.getRecipientId());
+                }
             } else {
                 chatService.storeUncheckChat(chat);
-                USER_CHANNEL.remove(chat.getRecipientId());
             }
-        } else {
-            chatService.storeUncheckChat(chat);
         }
     }
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-        System.out.println("Read");
         if (msg instanceof FullHttpRequest) {
             FullHttpRequest request = (FullHttpRequest) msg;
             String uri = request.uri();

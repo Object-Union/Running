@@ -10,5 +10,5 @@ public class Upload {
 
     public static final String UPLOAD_MOMENT_DIR = "/usr/upload/moment/";
 
-    public static final String BASE_URL = "https://objectunion.vip/run/";
+    public static final String BASE_URL = "http://81.69.99.102/run/";
 }

@@ -23,8 +23,8 @@ public class RunningApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-        InetSocketAddress websocketAddress = new InetSocketAddress(NettyCommon.NETTY_WEBSOCKET_SERVER, NettyCommon.NETTY_WEBSOCKET_PORT);
-        log.info("NettyWebSocket is running on --> " + "ws://" + NettyCommon.NETTY_WEBSOCKET_SERVER + ":" + NettyCommon.NETTY_WEBSOCKET_PORT + NettyCommon.NETTY_WEBSOCKET_URL);
+        InetSocketAddress websocketAddress = new InetSocketAddress(NettyCommon.NETTY_WEBSOCKET_PORT);
+        log.info("NettyWebSocket is running on --> " + "ws://127.0.0.1" + ":" + NettyCommon.NETTY_WEBSOCKET_PORT + NettyCommon.NETTY_WEBSOCKET_URL);
         new Thread(() -> nettyWebSocketServer.start(websocketAddress), "WebSocket").start();
     }
 }

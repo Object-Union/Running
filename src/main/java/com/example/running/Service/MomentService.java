@@ -39,8 +39,9 @@ public class MomentService {
             List<String> urls = new ArrayList<>();
             for (int i = 0; i < pictures.size(); i++) {
                 String uri = save.getId() + "_" + i + ".png";
-                urls.add(Upload.BASE_URL + uri);
-                pictures.get(i).transferTo(new File(Upload.MOMENT_DIR + uri));
+                urls.add(Upload.BASE_URL + "moment/" + uri);
+//                pictures.get(i).transferTo(new File(Upload.MOMENT_DIR + uri));
+                pictures.get(i).transferTo(new File(Upload.UPLOAD_MOMENT_DIR + uri));
             }
             save.setPictures(urls);
             return momentRepository.save(save);

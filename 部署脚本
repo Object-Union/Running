@@ -1,0 +1,2 @@
+docker build -t run:1.0 .
+docker run -d -v /home/lighthouse/nginx/www/run/avatar/:/usr/upload/avatar/ -v /home/lighthouse/nginx/www/run/moment/:/usr/upload/moment/ --net=host --privileged=true run:1.0
