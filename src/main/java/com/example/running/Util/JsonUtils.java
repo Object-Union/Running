@@ -11,7 +11,7 @@ public class JsonUtils {
         return mapper.readValue(json, clazz);
     }
 
-//    public static String ReadToJSON(Object obj) throws JsonProcessingException {
-//        return mapper.writeValueAsString(obj);
-//    }
+    public static String ReadToJSON(Object obj) throws JsonProcessingException {
+        return mapper.writeValueAsString(obj);
+    }
 }

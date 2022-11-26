@@ -69,7 +69,7 @@ public class NettyWebSocketServerHandler extends SimpleChannelInboundHandler<Tex
         try {
             chat = JsonUtils.ReadToObject(textWebSocketFrame.text(), Chat.class);
         } catch (JsonProcessingException e) {
-            channelHandlerContext.channel().writeAndFlush(new TextWebSocketFrame("发送数据格式错误！"));
+            channelHandlerContext.channel().writeAndFlush(new TextWebSocketFrame("发送数据格式错误!"));
         }
         if (chat != null) {
             Chat save = chatService.sendMessage(chat);
@@ -82,7 +82,11 @@ public class NettyWebSocketServerHandler extends SimpleChannelInboundHandler<Tex
                 Channel channel = CHANNEL_GROUP.find(recipientChannelId);
                 if (channel != null) {
                     log.info("已发送");
-                    channel.writeAndFlush(new TextWebSocketFrame(save.toString()));
+                    try {
+                        channel.writeAndFlush(new TextWebSocketFrame(JsonUtils.ReadToJSON(save)));
+                    } catch (JsonProcessingException e) {
+                        channelHandlerContext.channel().writeAndFlush(new TextWebSocketFrame("Chat类转化JSON失败!"));
+                    }
                 } else {
                     chatService.storeUncheckChat(chat);
                     USER_CHANNEL.remove(chat.getRecipientId());
