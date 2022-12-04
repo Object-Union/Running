@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
@@ -57,5 +58,15 @@ public class RunController {
     @RequestMapping("/DriftMeet")
     public List<User> DriftMeet(Integer routeId, Integer userId) {
         return runService.driftMeet(routeId, userId);
+    }
+
+    @RequestMapping("/UpdateRoomUserPosition")
+    public void UpdateRoomUserPosition(Integer roomId, Integer userId, BigDecimal x, BigDecimal y) {
+        runService.updateRoomUserPosition(roomId, userId, x, y);
+    }
+
+    @RequestMapping("/GetRoomUserPosition")
+    public List<RunRoom> GetRoomUserPosition(Integer roomId) {
+        return runService.getRoomUserPosition(roomId);
     }
 }

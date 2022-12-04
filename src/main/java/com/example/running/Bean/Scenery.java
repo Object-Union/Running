@@ -18,7 +18,8 @@ public class Scenery {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private Integer drift_run_id;
+    @Column(name = "drift_run_id")
+    private Integer driftRunId;
 
     private String name;
 

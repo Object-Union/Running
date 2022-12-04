@@ -63,4 +63,9 @@ public class MomentController {
     public List<Moment> GetUserMoments(Integer userId, Integer pageNo) {
         return momentService.getUserMoments(userId, pageNo);
     }
+
+    @RequestMapping("/GetSubscribeMoments")
+    public List<Moment> GetSubscribeMoments(Integer userId, Integer pageNo) {
+        return momentService.getSubscribeMoments(userId, pageNo);
+    }
 }

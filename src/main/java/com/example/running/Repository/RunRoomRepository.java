@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
+import java.math.BigDecimal;
 import java.util.List;
 
 @Repository(value = "RunRoomRepository")
@@ -20,4 +21,11 @@ public interface RunRoomRepository extends JpaRepository<RunRoom, Integer> {
     @Transactional
     @Query(nativeQuery = true, value = "delete from run_room where room_id = ?1 and user_id = ?2")
     void deleteRunRoomByRoomIdAndUserId(Integer roomId, Integer userId);
+
+    @Modifying
+    @Transactional
+    @Query(nativeQuery = true, value = "update run_room set x = ?3, y = ?4 where room_id = ?1 and user_id = ?2")
+    void updateUserPositionUserIdAndRoomId(Integer roomId, Integer userId, BigDecimal x, BigDecimal y);
+
+    List<RunRoom> findRunRoomsByRoomId(Integer roomId);
 }

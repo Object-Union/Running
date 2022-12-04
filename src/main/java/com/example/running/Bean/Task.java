@@ -23,7 +23,7 @@ public class Task {
     private Integer target;
 
     @Column(name = "medal_id")
-    private Integer medal_id;
+    private Integer medalId;
 
     @OneToOne
     @JoinColumn(name = "medal_id", insertable = false, updatable = false)

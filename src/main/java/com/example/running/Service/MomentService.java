@@ -113,4 +113,9 @@ public class MomentService {
         moments.forEach(moment -> moment.setTitle(EmojiParser.parseToUnicode(moment.getTitle())));
         return moments;
     }
+
+    public List<Moment> getSubscribeMoments(Integer userId, Integer pageNo) {
+        List<Integer> subscribeList = userRepository.findSubscribeIdByUserId(userId);
+        return momentRepository.findByUserIdIn(subscribeList, PageRequest.of(pageNo - 1, 5)).getContent();
+    }
 }

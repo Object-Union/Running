@@ -4,6 +4,7 @@ import lombok.*;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 
 @Entity
 @Getter
@@ -22,6 +23,10 @@ public class RunRoom {
 
     @Column(name = "user_id")
     private Integer userId;
+
+    private BigDecimal x;
+
+    private BigDecimal y;
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "user_id", insertable = false, updatable = false)

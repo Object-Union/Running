@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -130,5 +131,13 @@ public class RunService {
             }
         }
         return userRepository.findAllById(want);
+    }
+
+    public void updateRoomUserPosition(Integer roomId, Integer userId, BigDecimal x, BigDecimal y) {
+        runRoomRepository.updateUserPositionUserIdAndRoomId(roomId, userId, x, y);
+    }
+
+    public List<RunRoom> getRoomUserPosition(Integer roomId) {
+        return runRoomRepository.findRunRoomsByRoomId(roomId);
     }
 }

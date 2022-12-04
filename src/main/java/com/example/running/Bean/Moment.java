@@ -35,7 +35,7 @@ public class Moment {
     private LocalDateTime date;
 
     @Column(name = "record_id")
-    private Integer record_id;
+    private Integer recordId;
 
     @ElementCollection
     @CollectionTable(name = "moment_pictures",
@@ -57,11 +57,11 @@ public class Moment {
     @JoinColumn(name = "record_id", insertable = false, updatable = false)
     RunRecord runRecord;
 
-    public Moment(String title, String content, Integer userId, Integer record_id, Integer likeNum, LocalDateTime date) {
+    public Moment(String title, String content, Integer userId, Integer recordId, Integer likeNum, LocalDateTime date) {
         this.title = title;
         this.content = content;
         this.userId = userId;
-        this.record_id = record_id;
+        this.recordId = recordId;
         this.likeNum = likeNum;
         this.date = date;
     }
