@@ -3,6 +3,7 @@ package com.example.running.Service;
 import com.example.running.Bean.Comment;
 import com.example.running.Bean.Moment;
 import com.example.running.Bean.User;
+import com.example.running.Common.TaskCommon;
 import com.example.running.Common.Upload;
 import com.example.running.Repository.CommentRepository;
 import com.example.running.Repository.MomentRepository;
@@ -32,8 +33,13 @@ public class MomentService {
     @Resource(name = "CommentRepository")
     CommentRepository commentRepository;
 
+    @Resource(name = "MedalService")
+    MedalService medalService;
+
     @Transactional
     public Moment publish(Moment moment, List<MultipartFile> pictures) throws IOException {
+        medalService.getMedalOrNot(moment.getUserId(), TaskCommon.PUB_3_MOMENTS, 1);
+
         Moment save = momentRepository.save(moment);
         if (pictures != null) {
             List<String> urls = new ArrayList<>();

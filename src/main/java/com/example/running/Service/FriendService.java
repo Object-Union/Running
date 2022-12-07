@@ -1,19 +1,26 @@
 package com.example.running.Service;
 
 import com.example.running.Bean.User;
+import com.example.running.Common.TaskCommon;
 import com.example.running.Repository.UserRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.List;
-import java.util.Optional;
 
 @Service(value = "FriendService")
 public class FriendService {
     @Resource(name = "UserRepository")
     UserRepository userRepository;
 
+    @Resource(name = "MedalService")
+    MedalService medalService;
+
+    @Transactional
     public Integer subscribe(Integer userId, Integer friendId) {
+        medalService.getMedalOrNot(userId, TaskCommon.SUBSCRIBE_5_USERS, 1);
+        medalService.getMedalOrNot(friendId, TaskCommon.GET_3_FANS, 1);
         return userRepository.insertASubscribeRecord(userId, friendId);
     }
 

@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 @Repository(value = "MedalRepository")
 public interface MedalRepository extends JpaRepository<Medal, Integer> {
@@ -14,4 +15,7 @@ public interface MedalRepository extends JpaRepository<Medal, Integer> {
     @Transactional
     @Query(nativeQuery = true, value = "insert into user_medal values (null, ?1, ?2)")
     Integer insertGetMedalRecord(Integer userId, Integer medalId);
+
+    @Query(nativeQuery = true, value = "select medal_id from run.user_medal where user_id = ?1")
+    List<Integer> findUserGetMedalIdList(Integer userId);
 }

@@ -1,10 +1,16 @@
 package com.example.running.Service;
 
 import com.example.running.Bean.Medal;
+import com.example.running.Bean.Task;
 import com.example.running.Bean.User;
+import com.example.running.Bean.UserProcess;
+import com.example.running.Common.TaskCommon;
 import com.example.running.Repository.MedalRepository;
+import com.example.running.Repository.TaskRepository;
+import com.example.running.Repository.UserProcessRepository;
 import com.example.running.Repository.UserRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -17,6 +23,12 @@ public class MedalService {
 
     @Resource(name = "UserRepository")
     UserRepository userRepository;
+
+    @Resource(name = "TaskRepository")
+    TaskRepository taskRepository;
+
+    @Resource(name = "UserProcessRepository")
+    UserProcessRepository userProcessRepository;
 
     public List<Medal> info() {
         return medalRepository.findAll();
@@ -31,7 +43,17 @@ public class MedalService {
         return null;
     }
 
-    public Integer getMedal(Integer userId, Integer medalId) {
-        return medalRepository.insertGetMedalRecord(userId, medalId);
+    @Transactional
+    public void getMedalOrNot(Integer userId, Integer taskId, Integer delta) {
+        Task task = taskRepository.findById(taskId).orElse(null);
+        assert task != null;
+        List<Integer> medalIdList = medalRepository.findUserGetMedalIdList(userId);
+        if (!medalIdList.contains(task.getMedalId())) {
+            userProcessRepository.updateUserProgress(userId, taskId, delta);
+            UserProcess userProcess = userProcessRepository.findUserProcessByUserIdAndTaskId(userId, taskId);
+            if (task.getTarget() <= userProcess.getProcess()) {
+                medalRepository.insertGetMedalRecord(userId, task.getMedalId());
+            }
+        }
     }
 }

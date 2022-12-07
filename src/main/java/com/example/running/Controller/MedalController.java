@@ -23,9 +23,4 @@ public class MedalController {
     public List<Integer> Personal(Integer userId) {
         return medalService.personal(userId);
     }
-
-    @RequestMapping("/GetMedal")
-    public Integer GetMedal(Integer userId, Integer medalId) {
-        return medalService.getMedal(userId, medalId);
-    }
 }

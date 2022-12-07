@@ -1,6 +1,7 @@
 package com.example.running.Service;
 
 import com.example.running.Bean.*;
+import com.example.running.Common.TaskCommon;
 import com.example.running.Repository.*;
 import com.example.running.Util.RandomRoomKeyUtils;
 import org.springframework.stereotype.Service;
@@ -29,17 +30,30 @@ public class RunService {
     @Resource(name = "DriftRunRepository")
     DriftRunRepository driftRunRepository;
 
+    @Resource(name = "MedalService")
+    MedalService medalService;
+
     @Transactional
     public RunRecord saveRecord(RunRecord runRecord) {
+        medalService.getMedalOrNot(runRecord.getUserId(), TaskCommon.COMPLETE_1_RUN, 1);
+        medalService.getMedalOrNot(runRecord.getUserId(), TaskCommon.COMPLETE_5_RUN, 1);
+        medalService.getMedalOrNot(runRecord.getUserId(), TaskCommon.RUN_5_KM, runRecord.getMileage().intValue());
+        medalService.getMedalOrNot(runRecord.getUserId(), TaskCommon.CONSUME_1000_CALORIE, runRecord.getCalorie().intValue());
+
         runRecord.setDate(LocalDateTime.now());
+        // 若启用了房间跑
         if (runRecord.getRoomId() != null) {
-            // 已存在记录, 改为更新数据
             RunRecord record = runRecordRepository.findRunRecordByUserIdAndRoomId(runRecord.getUserId(), runRecord.getRoomId());
             if (record != null) {
                 runRecord.setId(record.getId());
             }
             leftRoom(runRecord.getRoomId(), runRecord.getUserId());
         }
+        // 若启用了漂移跑
+        if (runRecord.getDriftRouteId() != null) {
+            medalService.getMedalOrNot(runRecord.getUserId(), TaskCommon.COMPLETE_2_DRIFT_RUN, 1);
+        }
+
         return runRecordRepository.save(runRecord);
     }
 

@@ -1,10 +1,15 @@
 package com.example.running.Service;
 
 import com.example.running.Bean.RunRecord;
+import com.example.running.Bean.Task;
 import com.example.running.Bean.User;
+import com.example.running.Bean.UserProcess;
 import com.example.running.Common.Upload;
+import com.example.running.Repository.TaskRepository;
+import com.example.running.Repository.UserProcessRepository;
 import com.example.running.Repository.UserRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
@@ -18,8 +23,20 @@ public class UserService {
     @Resource(name = "UserRepository")
     UserRepository userRepository;
 
+    @Resource(name = "TaskRepository")
+    TaskRepository taskRepository;
+
+    @Resource(name = "UserProcessRepository")
+    UserProcessRepository userProcessRepository;
+
+    @Transactional
     public User register(User user) {
-        return userRepository.save(user);
+        User save = userRepository.save(user);
+        List<Task> tasks = taskRepository.findAll();
+        for (Task task : tasks) {
+            userProcessRepository.save(new UserProcess(null, save.getId(), task.getId(), 0));
+        }
+        return save;
     }
 
     public User login(String username, String password) {
