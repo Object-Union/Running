@@ -22,9 +22,9 @@ public class MomentController {
 
     @RequestMapping("/Publish")
     public Moment Publish(@RequestParam("userId") Integer userId,
-                          @RequestParam("title") String title,
+                          @RequestParam(value = "title", required = false) String title,
                           @RequestParam("content") String content,
-                          @RequestParam("record_id") Integer recordId,
+                          @RequestParam(value = "record_id", required = false) Integer recordId,
                           @RequestBody(required = false) List<MultipartFile> pictures) throws IOException {
         return momentService.publish(new Moment(title, content, userId, recordId, 0, LocalDateTime.now()), pictures);
     }

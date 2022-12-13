@@ -1,5 +1,6 @@
 package com.example.running.Util;
 
+import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -12,6 +13,7 @@ public class JsonUtils {
     }
 
     public static String ReadToJSON(Object obj) throws JsonProcessingException {
-        return mapper.writeValueAsString(obj);
+        return JSONObject.toJSONString(obj);
+//        return mapper.writeValueAsString(obj);
     }
 }

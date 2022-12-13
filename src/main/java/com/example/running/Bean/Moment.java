@@ -37,6 +37,9 @@ public class Moment {
     @Column(name = "record_id")
     private Integer recordId;
 
+//    @Transient
+//    private Boolean isLike;
+
     @ElementCollection
     @CollectionTable(name = "moment_pictures",
             joinColumns = @JoinColumn(name = "moment_id", referencedColumnName = "id")

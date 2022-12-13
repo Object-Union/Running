@@ -4,7 +4,6 @@ import com.example.running.Bean.Medal;
 import com.example.running.Bean.Task;
 import com.example.running.Bean.User;
 import com.example.running.Bean.UserProcess;
-import com.example.running.Common.TaskCommon;
 import com.example.running.Repository.MedalRepository;
 import com.example.running.Repository.TaskRepository;
 import com.example.running.Repository.UserProcessRepository;
@@ -45,7 +44,7 @@ public class MedalService {
 
     @Transactional
     public void getMedalOrNot(Integer userId, Integer taskId, Integer delta) {
-        Task task = taskRepository.findById(taskId).orElse(null);
+        Task task = taskRepository.findTaskById(taskId);
         assert task != null;
         List<Integer> medalIdList = medalRepository.findUserGetMedalIdList(userId);
         if (!medalIdList.contains(task.getMedalId())) {

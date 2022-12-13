@@ -23,4 +23,6 @@ public class Medal {
     private String icon;
 
     private String noIcon;
+
+    private Integer type;
 }

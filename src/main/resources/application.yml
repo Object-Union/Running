@@ -1,9 +1,11 @@
 spring:
   datasource:
-    url: jdbc:mysql://127.0.0.1:3306/run?useSSL=false
+#    url: jdbc:mysql://127.0.0.1:3306/run?useSSL=false
+#    username: root
+#    password: 123456
+    url: jdbc:mysql://10.0.4.8:3306/run?useSSL=false
     username: root
-    password: 123456
-#    url: jdbc:mysql://10.0.4.8:3306/run?useSSL=false
+    password: Sanbao2003
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     database: mysql

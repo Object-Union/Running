@@ -128,9 +128,16 @@ public class RunService {
 
     public List<User> driftMeet(Integer routeId, Integer userId) {
         List<Integer> userIds = runRecordRepository.findUserIdByRouteId(routeId);
+        List<Integer> subscribeList = userRepository.findSubscribeIdByUserId(userId);
+        ArrayList<Integer> idList = new ArrayList<>();
+        for (Integer id : userIds) {
+            if (!Objects.equals(id, userId) && !subscribeList.contains(id)) {
+                idList.add(id);
+            }
+        }
         List<Integer> want = new ArrayList<>();
         Random random = new Random();
-        if (userIds.size() > 5) {
+        if (idList.size() > 5) {
             while (want.size() != 5) {
                 int index = random.nextInt(userIds.size());
                 Integer randomId = userIds.get(index);

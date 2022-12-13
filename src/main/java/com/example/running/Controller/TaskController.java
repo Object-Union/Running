@@ -10,7 +10,7 @@ import javax.annotation.Resource;
 import java.util.List;
 
 @RestController
-@RequestMapping(name = "/Task")
+@RequestMapping("/Task")
 public class TaskController {
     @Resource(name = "TaskService")
     TaskService taskService;
